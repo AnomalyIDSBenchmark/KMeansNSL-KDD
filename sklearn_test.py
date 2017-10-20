@@ -23,12 +23,10 @@ def load_data(file_path, cols=None):
 
     # Scale all numerical data to [0-1]
     data.ix[:, NUM_IND] = minmax_scale(data.ix[:, NUM_IND])
-    labels = None
-    if 'labels' in data.columns:
-        labels = data['labels']
-        # Binary labeling
-        labels = labels.apply(lambda x: x if x =='normal' else 'anomaly')
-        del data['labels']
+    labels = data['labels']
+    # Binary labeling
+    labels = labels.apply(lambda x: x if x =='normal' else 'anomaly')
+    del data['labels']
     data = pd.get_dummies(data)
     if cols is None:
         cols = data.columns
